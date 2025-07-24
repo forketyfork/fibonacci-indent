@@ -160,6 +160,9 @@ This document outlines the complete implementation plan for the Fibonacci Indent
 - [x] Fix GitHub Actions verifyPlugin failure (July 24, 2025)
   - [x] Added missing intellijPlatform.pluginVerification.ides configuration
   - [x] Plugin verification now works with recommended IDE versions
+- [x] Fix GitHub Actions test workflow failures (July 24, 2025)
+  - [x] Fixed COMMENT_MODE configuration in test.yml workflow
+  - [x] Changed unsupported 'create new' value to 'always' for test summary publishing
 
 ### 6.3 Release Automation
 - [ ] Create release workflow

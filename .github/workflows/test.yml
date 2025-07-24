@@ -191,7 +191,7 @@ jobs:
           test-artifacts/**/TEST-*.xml
           test-artifacts/**/*.xml
         check_name: "Test Results Summary"
-        comment_mode: create new
+        comment_mode: always
         fail_on: "test failures"
         action_fail: true
         action_fail_on_inconclusive: true

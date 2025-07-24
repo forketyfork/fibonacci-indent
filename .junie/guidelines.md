@@ -113,3 +113,7 @@ nesting levels.
 2. Enable verbose logging in plugin.xml if needed
 3. Test plugin in a separate IntelliJ instance using `./gradlew runIde`
 4. Check IntelliJ Platform documentation for specific plugin development patterns
+
+## Tools
+- to investigate GitHub Actions failures, you can use the `gh` utility. Make sure to call it in such a way as to 
+  prevent the paging, e.g., `gh run list --limit 10 | cat`.
