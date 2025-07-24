@@ -1,0 +1,18 @@
+[versions]
+kotlin = "2.2.0"
+intellij-platform = "2.6.0"
+intellij-version = "2025.1"
+java-compatibility = "21"
+since-build = "251"
+junit-jupiter = "5.10.0"
+junit-platform-launcher = "1.10.0"
+junit = "4.13.2"
+
+[libraries]
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
+junit = { module = "junit:junit", version.ref = "junit" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+intellij-platform = { id = "org.jetbrains.intellij.platform", version.ref = "intellij-platform" }

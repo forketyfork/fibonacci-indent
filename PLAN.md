@@ -11,6 +11,8 @@ This document outlines the complete implementation plan for the Fibonacci Indent
 - [x] Add necessary IntelliJ Platform dependencies
 - [x] Set up plugin.xml with required extension points
 - [x] Add MIT license to the project
+- [x] Implement Gradle version catalog (libs.versions.toml) for dependency management
+- [x] Fix Gradle configuration errors and ensure successful build
 
 ### 1.2 Core Fibonacci Logic
 - [x] Create `FibonacciSequence` utility class
