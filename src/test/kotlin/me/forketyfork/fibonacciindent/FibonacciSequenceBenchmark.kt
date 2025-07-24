@@ -18,7 +18,7 @@ class FibonacciSequenceBenchmark {
     
     @BeforeEach
     fun setUp() {
-        // Clear cache before each benchmark to ensure consistent starting conditions
+        // Clear the cache before each benchmark to ensure consistent starting conditions
         FibonacciSequence.clearCache()
     }
     

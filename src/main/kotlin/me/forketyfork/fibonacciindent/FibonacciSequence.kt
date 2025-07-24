@@ -20,7 +20,7 @@ object FibonacciSequence {
     const val MAX_INDENTATION_LEVEL = 20
     
     /**
-     * Fallback indentation value used when level exceeds maximum or in error cases.
+     * Fallback indentation value used when the level exceeds maximum or in error cases.
      */
     const val FALLBACK_INDENTATION = 4
     
@@ -29,7 +29,7 @@ object FibonacciSequence {
      * Uses a thread-safe map for concurrent access.
      */
     private val cache = mutableMapOf<Int, Int>().apply {
-        // Pre-populate cache with initial values
+        // Pre-populate the cache with initial values
         put(1, 2)  // Level 1 = 2 spaces
         put(2, 3)  // Level 2 = 3 spaces
     }
@@ -39,7 +39,7 @@ object FibonacciSequence {
      * 
      * @param level The indentation level (1-based indexing)
      * @return The number of spaces for the given indentation level
-     * @throws IllegalArgumentException if level is less than 1
+     * @throws IllegalArgumentException if the level is lower than 1
      */
     @Synchronized
     fun getIndentationForLevel(level: Int): Int {
@@ -167,7 +167,7 @@ object FibonacciSequence {
             if (sequence.isNotEmpty() && sequence[0] != 2) return false
             if (sequence.size > 1 && sequence[1] != 3) return false
             
-            // Check Fibonacci property for subsequent values (only if we have at least 3 elements)
+            // Check the Fibonacci property for further values (only if we have at least 3 elements)
             for (i in 2 until sequence.size) {
                 if (sequence[i] != sequence[i - 1] + sequence[i - 2]) {
                     return false

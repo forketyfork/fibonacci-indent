@@ -18,7 +18,7 @@ class FibonacciSequenceTest {
     
     @BeforeEach
     fun setUp() {
-        // Clear cache before each test to ensure clean state
+        // Clear cache before each test to ensure a clean state
         FibonacciSequence.clearCache()
     }
     
@@ -45,7 +45,7 @@ class FibonacciSequenceTest {
     
     @Test
     fun testCachingMechanism() {
-        // Clear cache and verify initial state
+        // Clear cache and verify the initial state
         FibonacciSequence.clearCache()
         assertEquals(2, FibonacciSequence.getCacheSize(), "Cache should start with 2 pre-populated values")
         
@@ -53,7 +53,7 @@ class FibonacciSequenceTest {
         FibonacciSequence.getIndentationForLevel(5)
         assertEquals(5, FibonacciSequence.getCacheSize(), "Cache should contain 5 values after requesting level 5")
         
-        // Request same level again - should use cache
+        // Request the same level again - should use cache
         val result1 = FibonacciSequence.getIndentationForLevel(5)
         val result2 = FibonacciSequence.getIndentationForLevel(5)
         assertEquals(result1, result2, "Cached results should be consistent")
