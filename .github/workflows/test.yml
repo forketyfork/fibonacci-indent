@@ -1,0 +1,197 @@
+name: Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  unit-tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        java-version: ['21']
+      fail-fast: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-home-cache-cleanup: true
+        cache-read-only: ${{ github.event_name == 'pull_request' }}
+
+    - name: Grant execute permission for gradlew
+      if: runner.os != 'Windows'
+      run: chmod +x gradlew
+
+    - name: Run unit tests
+      run: ./gradlew test --continue
+      env:
+        GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+    - name: Generate test report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Unit Tests (${{ matrix.os }})
+        path: build/test-results/test/*.xml
+        reporter: java-junit
+        fail-on-error: false
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}-java${{ matrix.java-version }}
+        path: |
+          build/test-results/
+          build/reports/tests/
+        retention-days: 7
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-home-cache-cleanup: true
+        cache-read-only: ${{ github.event_name == 'pull_request' }}
+
+    - name: Run integration tests
+      run: echo "Integration tests not yet implemented - placeholder for future implementation"
+
+    - name: Upload integration test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration-test-results
+        path: |
+          build/test-results/test/
+          build/reports/tests/test/
+        retention-days: 7
+
+  code-coverage:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-home-cache-cleanup: true
+        cache-read-only: ${{ github.event_name == 'pull_request' }}
+
+    - name: Run tests with coverage
+      run: ./gradlew test jacocoTestReport --continue
+      env:
+        GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+    - name: Generate coverage reports
+      run: ./gradlew jacocoTestCoverageVerification || true
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: build/reports/jacoco/test/jacocoTestReport.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Upload coverage artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-reports
+        path: |
+          build/reports/jacoco/
+          build/reports/tests/test/
+        retention-days: 30
+
+  performance-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-home-cache-cleanup: true
+        cache-read-only: ${{ github.event_name == 'pull_request' }}
+
+    - name: Run performance benchmarks
+      run: ./gradlew testIdePerformance --continue || true
+      env:
+        GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+    - name: Upload performance test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-test-results
+        path: |
+          build/reports/performance/
+          build/test-results/testIdePerformance/
+        retention-days: 14
+
+  test-summary:
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests, code-coverage, performance-tests]
+    if: always()
+
+    steps:
+    - name: Download all test artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: test-artifacts
+
+    - name: Publish test summary
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          test-artifacts/**/TEST-*.xml
+          test-artifacts/**/*.xml
+        check_name: "Test Results Summary"
+        comment_mode: create new
+        fail_on: "test failures"
+        action_fail: true
+        action_fail_on_inconclusive: true
