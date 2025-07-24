@@ -185,6 +185,7 @@ jobs:
 
     permissions:
       checks: write
+      pull-requests: write
 
     if: always()
 
