@@ -10,6 +10,7 @@ This document outlines the complete implementation plan for the Fibonacci Indent
 - [x] Configure Kotlin source sets in build.gradle.kts
 - [x] Add necessary IntelliJ Platform dependencies
 - [x] Set up plugin.xml with required extension points
+- [x] Add MIT license to the project
 
 ### 1.2 Core Fibonacci Logic
 - [ ] Create `FibonacciSequence` utility class
