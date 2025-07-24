@@ -185,6 +185,7 @@ jobs:
 
     permissions:
       checks: write
+      pull-requests: write
 
     if: always()
 
@@ -200,7 +201,7 @@ jobs:
       with:
         files: |
           test-artifacts/**/TEST-*.xml
-          test-artifacts/**/*.xml
+          test-artifacts/**/test-results/**/*.xml
         check_name: "Test Results Summary"
         comment_mode: always
         fail_on: "test failures"
