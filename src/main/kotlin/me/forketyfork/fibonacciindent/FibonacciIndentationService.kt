@@ -5,6 +5,7 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.util.xmlb.XmlSerializerUtil
 
 /**
@@ -119,47 +120,101 @@ class FibonacciIndentationServiceImpl :
     FibonacciIndentationService,
     PersistentStateComponent<FibonacciIndentationState> {
     private var state = FibonacciIndentationState()
+    private val logger = Logger.getInstance(FibonacciIndentationServiceImpl::class.java)
 
-    override fun getState(): FibonacciIndentationState = state
-
-    override fun loadState(state: FibonacciIndentationState) {
-        XmlSerializerUtil.copyBean(state, this.state)
+    override fun getState(): FibonacciIndentationState {
+        logger.debug(
+            "getState called, returning: enabled=${state.enabled}, " +
+                "maxLevel=${state.maxIndentationLevel}, fallback=${state.fallbackIndentation}",
+        )
+        return state
     }
 
-    override fun isEnabled(): Boolean = state.enabled
+    override fun loadState(state: FibonacciIndentationState) {
+        logger.debug(
+            "loadState called with: enabled=${state.enabled}, " +
+                "maxLevel=${state.maxIndentationLevel}, fallback=${state.fallbackIndentation}",
+        )
+        XmlSerializerUtil.copyBean(state, this.state)
+        logger.debug("State loaded successfully")
+    }
+
+    override fun isEnabled(): Boolean {
+        val enabled = state.enabled
+        logger.debug("isEnabled() = $enabled")
+        return enabled
+    }
 
     override fun setEnabled(enabled: Boolean) {
+        logger.debug("setEnabled($enabled), previous value: ${state.enabled}")
         state.enabled = enabled
     }
 
-    override fun getMaxIndentationLevel(): Int = state.maxIndentationLevel
+    override fun getMaxIndentationLevel(): Int {
+        val maxLevel = state.maxIndentationLevel
+        logger.debug("getMaxIndentationLevel() = $maxLevel")
+        return maxLevel
+    }
 
     override fun setMaxIndentationLevel(maxLevel: Int) {
+        logger.debug("setMaxIndentationLevel($maxLevel), previous value: ${state.maxIndentationLevel}")
         require(maxLevel in 1..FibonacciSequence.MAX_INDENTATION_LEVEL) {
             "Maximum indentation level must be between 1 and ${FibonacciSequence.MAX_INDENTATION_LEVEL}, got: $maxLevel"
         }
         state.maxIndentationLevel = maxLevel
+        logger.debug("Max indentation level set to $maxLevel")
     }
 
-    override fun getFallbackIndentation(): Int = state.fallbackIndentation
+    override fun getFallbackIndentation(): Int {
+        val fallback = state.fallbackIndentation
+        logger.debug("getFallbackIndentation() = $fallback")
+        return fallback
+    }
 
     override fun setFallbackIndentation(fallback: Int) {
+        logger.debug("setFallbackIndentation($fallback), previous value: ${state.fallbackIndentation}")
         require(fallback > 0) {
             "Fallback indentation must be positive, got: $fallback"
         }
         state.fallbackIndentation = fallback
+        logger.debug("Fallback indentation set to $fallback")
     }
 
-    override fun calculateIndentation(level: Int): Int =
-        if (level <= state.maxIndentationLevel) {
-            FibonacciSequence.getIndentationForLevel(level)
-        } else {
-            state.fallbackIndentation * level
-        }
+    override fun calculateIndentation(level: Int): Int {
+        logger.debug("calculateIndentation($level) called, maxLevel=${state.maxIndentationLevel}")
+        val result =
+            if (level <= state.maxIndentationLevel) {
+                val fibonacciSpaces = FibonacciSequence.getIndentationForLevel(level)
+                logger.debug("Using Fibonacci sequence: level $level -> $fibonacciSpaces spaces")
+                fibonacciSpaces
+            } else {
+                val fallbackSpaces = state.fallbackIndentation * level
+                logger.debug(
+                    "Using fallback calculation: level $level -> $fallbackSpaces spaces " +
+                        "(${state.fallbackIndentation} * $level)",
+                )
+                fallbackSpaces
+            }
+        logger.debug("calculateIndentation($level) = $result")
+        return result
+    }
 
-    override fun getLevelForSpaces(spaces: Int): Int = FibonacciSequence.getLevelForSpaces(spaces)
+    override fun getLevelForSpaces(spaces: Int): Int {
+        logger.debug("getLevelForSpaces($spaces) called")
+        val level = FibonacciSequence.getLevelForSpaces(spaces)
+        logger.debug("getLevelForSpaces($spaces) = $level")
+        return level
+    }
 
     override fun resetToDefaults() {
+        logger.debug(
+            "resetToDefaults() called, current state: enabled=${state.enabled}, " +
+                "maxLevel=${state.maxIndentationLevel}, fallback=${state.fallbackIndentation}",
+        )
         state = FibonacciIndentationState()
+        logger.debug(
+            "State reset to defaults: enabled=${state.enabled}, " +
+                "maxLevel=${state.maxIndentationLevel}, fallback=${state.fallbackIndentation}",
+        )
     }
 }

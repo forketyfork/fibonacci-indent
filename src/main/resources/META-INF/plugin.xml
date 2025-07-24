@@ -29,9 +29,11 @@
         <applicationService serviceInterface="me.forketyfork.fibonacciindent.FibonacciIndentationService"
                            serviceImplementation="me.forketyfork.fibonacciindent.FibonacciIndentationServiceImpl"/>
 
+        <!-- Typed handler for real-time Fibonacci indentation -->
+        <typedHandler implementation="me.forketyfork.fibonacciindent.FibonacciIndentationHandler"/>
+
         <!-- Future extensions:
-             - typedHandler for FibonacciTypedHandler
-             - editorActionHandler for FibonacciEnterHandler
+             - editorActionHandler for additional editor actions
              - applicationConfigurable for settings panel
         -->
     </extensions>
