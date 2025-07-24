@@ -6,8 +6,20 @@
     <vendor url="https://forketyfork.github.io">Forketyfork</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Fibonacci Indent provides automatic indentation based on the Fibonacci sequence for enhanced code readability.<br>
+    <br>
+    This plugin applies indentation levels using the Fibonacci sequence (2, 3, 5, 8, 13, 21, ...) spaces,
+    creating a visually distinctive pattern
+    that helps developers better understand code structure and nesting levels.<br>
+    <br>
+    <strong>Features:</strong><br>
+    • Automatic Fibonacci-based indentation (2, 3, 5, 8, 13, 21, ... spaces)<br>
+    • Multi-language support for all IntelliJ-supported languages<br>
+    • Real-time indentation application as you type<br>
+    • Configurable settings and preferences<br>
+    • Full integration with IntelliJ's undo/redo system<br>
+    <br>
+    Perfect for developers who want a mathematically beautiful and functionally distinctive indentation system.
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
