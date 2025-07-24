@@ -69,11 +69,12 @@ nesting levels.
 
 ## Development Information
 
-### Implementation requirements
+### Development guidelines
 
 - **ALWAYS** run the build and test after implementing your task
 - **ALWAYS** make sure that the files `PLAN.md`, `README.md` and `.junie/guidelines.md` are up to date after your
   changes; check off the tasks in `PLAN.md` as you go.
+- We have **ZERO** toleration to any warnings during compilation and build. Make sure to fix them or create a task in PLAN.md to address them.
 
 ### Code Style
 
@@ -103,7 +104,7 @@ nesting levels.
 - **Main Resources**: `src/main/resources/META-INF/`
     - `plugin.xml`: Plugin configuration
     - `pluginIcon.svg`: Plugin icon
-- **Source Code**: Currently no implementation files exist
+- **Source Code**: `src/main/kotlin/me/forketyfork/fibonacciindent/` (directory structure set up, implementation files to be added in Phase 1.2+)
 - **Tests**: `src/test/kotlin/me/forketyfork/fibonacciindent/`
 
 ### Debugging Tips

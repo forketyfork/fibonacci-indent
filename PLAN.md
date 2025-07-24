@@ -5,11 +5,11 @@ This document outlines the complete implementation plan for the Fibonacci Indent
 ## Phase 1: Core Infrastructure Setup
 
 ### 1.1 Project Structure and Configuration
-- [ ] Set up main source directories (`src/main/kotlin/me/forketyfork/fibonacciindent/`)
-- [ ] Create test directories (`src/test/kotlin/me/forketyfork/fibonacciindent/`)
-- [ ] Configure Kotlin source sets in build.gradle.kts
-- [ ] Add necessary IntelliJ Platform dependencies
-- [ ] Set up plugin.xml with required extension points
+- [x] Set up main source directories (`src/main/kotlin/me/forketyfork/fibonacciindent/`)
+- [x] Create test directories (`src/test/kotlin/me/forketyfork/fibonacciindent/`)
+- [x] Configure Kotlin source sets in build.gradle.kts
+- [x] Add necessary IntelliJ Platform dependencies
+- [x] Set up plugin.xml with required extension points
 
 ### 1.2 Core Fibonacci Logic
 - [ ] Create `FibonacciSequence` utility class
