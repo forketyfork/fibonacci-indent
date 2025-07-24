@@ -175,7 +175,7 @@ object FibonacciSequence {
             }
             
             return true
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return false
         }
     }
