@@ -25,9 +25,11 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Extension points will be added in Phase 1.2 and Phase 2 -->
+        <!-- Application-level service for managing Fibonacci indentation functionality -->
+        <applicationService serviceInterface="me.forketyfork.fibonacciindent.FibonacciIndentationService"
+                           serviceImplementation="me.forketyfork.fibonacciindent.FibonacciIndentationServiceImpl"/>
+
         <!-- Future extensions:
-             - applicationService for FibonacciIndentationService
              - typedHandler for FibonacciTypedHandler
              - editorActionHandler for FibonacciEnterHandler
              - applicationConfigurable for settings panel
