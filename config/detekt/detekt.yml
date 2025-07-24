@@ -1,0 +1,17 @@
+# Detekt configuration for Fibonacci Indent Plugin
+# Simplified configuration focusing on essential code quality rules
+
+potential-bugs:
+  active: true
+  ExplicitGarbageCollectionCall:
+    active: false  # Disabled for benchmark tests
+
+style:
+  active: true
+  MagicNumber:
+    active: false  # Disabled to allow magic numbers in utility classes
+  ReturnCount:
+    active: false  # Disabled to allow multiple returns in utility functions
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
