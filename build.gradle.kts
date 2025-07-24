@@ -24,10 +24,11 @@ dependencies {
         // Add necessary plugin dependencies for compilation here
         bundledPlugin("com.intellij.java")
     }
-    
+
     // Test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("junit:junit:4.13.2")
 }
 
 intellijPlatform {
@@ -50,5 +51,9 @@ tasks {
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
