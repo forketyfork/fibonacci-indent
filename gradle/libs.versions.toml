@@ -1,13 +1,13 @@
 [versions]
-kotlin = "2.2.0"
-intellij-platform = "2.6.0"
+kotlin = "2.3.0"
+intellij-platform = "2.10.5"
 intellij-version = "2025.1"
 java-compatibility = "21"
 since-build = "251"
-junit-jupiter = "5.13.4"
-junit-platform-launcher = "1.13.4"
+junit-jupiter = "6.0.1"
+junit-platform-launcher = "6.0.1"
 junit = "4.13.2"
-ktlint-gradle = "13.0.0"
+ktlint-gradle = "14.0.1"
 detekt = "1.23.8"
 
 [libraries]
