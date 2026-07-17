@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.4.0"
-intellij-platform = "2.18.0"
+intellij-platform = "2.18.1"
 intellij-version = "2025.1"
 java-compatibility = "21"
 since-build = "251"
